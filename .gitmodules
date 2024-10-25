@@ -1,6 +1,0 @@
-[submodule "totemarts-patcher-cli"]
-	path = totemarts-patcher-cli
-	url = https://github.com/pminten/totemarts-patcher-cli.git
-[submodule "xdelta-gpl"]
-	path = xdelta-gpl
-	url = https://github.com/jmacd/xdelta-gpl.git
