@@ -14,6 +14,69 @@ export WINEARCH=win64
 export WINEDEBUG=-all
 export WINEDLLOVERRIDES="mscoree,mshtml="
 
+resolve_docker_host_ip() {
+  local ip hex
+  ip=$(getent ahostsv4 host.docker.internal 2>/dev/null | awk 'NR==1 {print $1; exit}')
+  if [[ -n "$ip" ]]; then
+    printf '%s' "$ip"
+    return
+  fi
+  ip=$(awk 'tolower($2)=="host.docker.internal" {print $1; exit}' /etc/hosts 2>/dev/null)
+  if [[ -n "$ip" ]]; then
+    printf '%s' "$ip"
+    return
+  fi
+  if command -v ip >/dev/null 2>&1; then
+    ip=$(ip -4 route show default 2>/dev/null | awk 'NR==1 {print $3; exit}')
+    if [[ -n "$ip" ]]; then
+      printf '%s' "$ip"
+      return
+    fi
+  fi
+  hex=$(awk '$2=="00000000" {print $3; exit}' /proc/net/route 2>/dev/null)
+  if [[ -n "$hex" && "$hex" != "00000000" ]]; then
+    printf '%d.%d.%d.%d' "0x${hex:6:2}" "0x${hex:4:2}" "0x${hex:2:2}" "0x${hex:0:2}"
+  fi
+}
+
+map_docker_host() {
+  local ip hosts ini
+  ip=$(resolve_docker_host_ip)
+  if [[ -z "$ip" ]]; then
+    echo "Could not find an address for the Docker host" | tee -a "$LOG"
+    return 0
+  fi
+  echo "Docker host address: $ip" | tee -a "$LOG"
+
+  hosts="$WINEPREFIX/drive_c/windows/system32/drivers/etc/hosts"
+  if [[ -d "$WINEPREFIX/drive_c/windows/system32" ]]; then
+    mkdir -p "$(dirname "$hosts")"
+    [[ -f "$hosts" ]] || printf '127.0.0.1\tlocalhost\n' > "$hosts"
+    grep -vi 'host\.docker\.internal' "$hosts" > "$hosts.tmp" || true
+    printf '%s\thost.docker.internal\n' "$ip" >> "$hosts.tmp"
+    mv "$hosts.tmp" "$hosts"
+  fi
+
+  if [[ -w /etc/hosts ]]; then
+    grep -vi 'host\.docker\.internal' /etc/hosts > /tmp/jupiter-hosts || true
+    printf '%s\thost.docker.internal\n' "$ip" >> /tmp/jupiter-hosts
+    cat /tmp/jupiter-hosts > /etc/hosts
+    rm -f /tmp/jupiter-hosts
+  fi
+
+  ini="$BOT/Configs/RenX.Core.ini"
+  if [[ -f "$ini" ]] && grep -q '^Hostname=host\.docker\.internal[[:space:]]*$' "$ini"; then
+    sed -i 's/^Hostname=host\.docker\.internal[[:space:]]*$/Hostname='"$ip"'/' "$ini"
+    echo "RCON host set to $ip" | tee -a "$LOG"
+  fi
+}
+
+if [[ "${1:-}" == "host" ]]; then
+  echo "Mapping Docker host for Wine" | tee -a "$LOG"
+  map_docker_host
+  exit 0
+fi
+
 echo "Jupiter Bot Wine setup. Log: $LOG" | tee "$LOG"
 
 if [[ ! -d "$BOT" ]]; then
@@ -66,5 +129,6 @@ if [[ "$missing" -ne 0 ]]; then
   exit 1
 fi
 
+map_docker_host
 echo "Wine setup complete" | tee -a "$LOG"
 exit 0

@@ -34,5 +34,13 @@
         "OverwriteExistingFiles": true,
         "UpdateSourceConditionSetting": "EnableIrc",
         "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Map Docker Host",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/winescript.sh host",
+        "SkipOnFailure": true
     }
 ]
