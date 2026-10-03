@@ -36,11 +36,11 @@
         "UpdateSourceConditionValue": "true"
     },
     {
-        "UpdateStageName": "Map Docker Host",
+        "UpdateStageName": "Set RCON Host",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "{{$FullInstanceDir}}/winescript.sh host",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/winescript.sh host {{$ExternalIP}}",
         "SkipOnFailure": true
     }
 ]

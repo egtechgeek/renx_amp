@@ -15,7 +15,7 @@
         "DisplayName": "RCON Host",
         "Category": "Jupiter Bot:smart_toy",
         "Subcategory": "Renegade X:sports_esports:2",
-        "Description": "Address of the game server. On Linux AMP the default is host.docker.internal, and the start step replaces that name with the Docker host address because Wine cannot resolve it. On Windows it is 127.0.0.1. You can type a different address. The bot connects to the RenX section. Add another server by editing Configs/RenX.Core.ini.",
+        "Description": "Address of the game server. On Linux AMP, leave this as host.docker.internal. The start step replaces it with the public address AMP detected, the same address players use to join. On Windows it is 127.0.0.1. You can type a different address. The bot connects to the RenX section. Add another server by editing Configs/RenX.Core.ini.",
         "Keywords": "hostname,host,rcon",
         "FieldName": "RenxHostname",
         "InputType": "text",
