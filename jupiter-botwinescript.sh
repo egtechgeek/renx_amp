@@ -102,6 +102,69 @@ rcon_accepts() {
   return 1
 }
 
+use_rcon_target() {
+  local ip="$1" public="$2" port="$3"
+  rm -f "$SCRIPTDIR/rcon.upstream"
+  if [[ "$ip" == "127.0.0.1" ]]; then
+    write_rcon_host "$ip" "$public"
+    return 0
+  fi
+  printf '%s %s\n' "$ip" "$port" > "$SCRIPTDIR/rcon.upstream"
+  write_rcon_host "127.0.0.1" "$public"
+  echo "Forwarding 127.0.0.1:$port to $ip:$port" | tee -a "$LOG"
+}
+
+start_rcon_forward() {
+  local ip port
+  [[ -f "$SCRIPTDIR/rcon.upstream" ]] || return 0
+  read -r ip port < "$SCRIPTDIR/rcon.upstream"
+  [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ && "$port" =~ ^[0-9]+$ ]] || return 0
+  perl - "$ip" "$port" <<'END' >/dev/null 2>&1 &
+use Socket;
+my ($up, $port) = @ARGV;
+$SIG{CHLD} = "IGNORE";
+socket(L, PF_INET, SOCK_STREAM, getprotobyname("tcp")) or die $!;
+setsockopt(L, SOL_SOCKET, SO_REUSEADDR, pack("l", 1));
+bind(L, pack_sockaddr_in($port, inet_aton("127.0.0.1"))) or die $!;
+listen(L, 8) or die $!;
+while (1) {
+  accept(C, L) or next;
+  defined(my $pid = fork()) or next;
+  if ($pid) { close C; next; }
+  socket(U, PF_INET, SOCK_STREAM, getprotobyname("tcp")) or exit 1;
+  connect(U, pack_sockaddr_in($port, inet_aton($up))) or exit 1;
+  defined(my $copy = fork()) or exit 1;
+  if ($copy == 0) {
+    while (1) {
+      my $n = sysread(C, my $buf, 65536);
+      last if !$n;
+      syswrite(U, $buf) or last;
+    }
+    shutdown(U, 1);
+    exit 0;
+  }
+  while (1) {
+    my $n = sysread(U, my $buf, 65536);
+    last if !$n;
+    syswrite(C, $buf) or last;
+  }
+  shutdown(C, 1);
+  waitpid($copy, 0);
+  exit 0;
+}
+END
+  forward_pid=$!
+  local i
+  for ((i=0; i<20; i++)); do
+    if port_open 127.0.0.1 "$port" 0.2; then
+      echo "Local forward is listening on 127.0.0.1:$port" | tee -a "$LOG"
+      return 0
+    fi
+    sleep 0.1
+  done
+  echo "Local forward did not start" | tee -a "$LOG"
+}
+
 write_rcon_host() {
   local ip="$1"
   local ini="$BOT/Configs/RenX.Core.ini"
@@ -128,7 +191,7 @@ choose_rcon_host() {
   peer=$(first_published_port "$port" "$public")
   if [[ -n "$peer" ]]; then
     echo "Published port $port is open at $peer" | tee -a "$LOG"
-    write_rcon_host "$peer" "$public"
+    use_rcon_target "$peer" "$public" "$port"
     return 0
   fi
 
@@ -136,7 +199,7 @@ choose_rcon_host() {
   mapfile -t peers < <(find_docker_game_servers "$port")
   if ((${#peers[@]} == 1)); then
     echo "Game server found at ${peers[0]}" | tee -a "$LOG"
-    write_rcon_host "${peers[0]}" "$public"
+    use_rcon_target "${peers[0]}" "$public" "$port"
     return 0
   fi
   if ((${#peers[@]} > 1)); then
@@ -152,18 +215,21 @@ choose_rcon_host() {
     fi
     if ((${#matches[@]} == 1)); then
       echo "RCON password matched ${matches[0]}" | tee -a "$LOG"
-      write_rcon_host "${matches[0]}" "$public"
+      use_rcon_target "${matches[0]}" "$public" "$port"
       return 0
     fi
     echo "Set RCON Host to the server this bot should join." | tee -a "$LOG"
     return 0
   fi
 
+  rm -f "$SCRIPTDIR/rcon.upstream"
   echo "This container cannot reach port $port. The game server is on another Docker network, and the published port did not accept a connection." | tee -a "$LOG"
 }
 
 if [[ "${1:-}" == "run" ]]; then
   cd "$BOT" || exit 1
+  forward_pid=""
+  start_rcon_forward
   fifo="$SCRIPTDIR/bot.stdin"
   rm -f "$fifo"
   if mkfifo "$fifo"; then
@@ -171,10 +237,10 @@ if [[ "${1:-}" == "run" ]]; then
     wine_pid=$!
     cat > "$fifo" &
     cat_pid=$!
-    trap 'kill "$wine_pid" "$cat_pid" 2>/dev/null || true' TERM INT
+    trap 'kill "$wine_pid" "$cat_pid" ${forward_pid:-} 2>/dev/null || true' TERM INT
     wait "$wine_pid"
     status=$?
-    kill "$cat_pid" 2>/dev/null || true
+    kill "$cat_pid" ${forward_pid:-} 2>/dev/null || true
     rm -f "$fifo"
     exit "$status"
   fi
