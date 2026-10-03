@@ -14,7 +14,7 @@ export WINEARCH=win64
 export WINEDEBUG=-all
 export WINEDLLOVERRIDES="mscoree,mshtml="
 
-echo "Jupiter Bot Wine setup" > "$LOG"
+echo "Jupiter Bot Wine setup. Log: $LOG" | tee "$LOG"
 
 if [[ ! -d "$BOT" ]]; then
   echo "Jupiter Bot directory not found: $BOT" | tee -a "$LOG"
@@ -43,10 +43,17 @@ fi
 rm -rf "$HOME/.cache/winetricks" "$HOME/.cache/fontconfig"
 wineserver -k >/dev/null 2>&1 || true
 
+find_dll() {
+  find "$1" -iname "$2" -type f 2>/dev/null | head -n 1
+}
+
 missing=0
-if [[ ! -f "$WINEPREFIX/drive_c/windows/system32/VCRUNTIME140_1.dll" && ! -f "$WINEPREFIX/drive_c/windows/syswow64/VCRUNTIME140_1.dll" ]]; then
-  echo "Missing VCRUNTIME140_1.dll" | tee -a "$LOG"
+runtime_dll=$(find_dll "$WINEPREFIX" "vcruntime140_1.dll")
+if [[ -z "$runtime_dll" ]]; then
+  echo "Missing vcruntime140_1.dll" | tee -a "$LOG"
   missing=1
+else
+  cp -f "$runtime_dll" "$WINEPREFIX/drive_c/windows/system32/vcruntime140_1.dll" 2>/dev/null || true
 fi
 if [[ ! -f "$BOT/libssl-1_1-x64.dll" || ! -f "$BOT/libcrypto-1_1-x64.dll" ]]; then
   echo "Missing OpenSSL 1.1 DLLs next to Bot.exe" | tee -a "$LOG"
@@ -54,7 +61,8 @@ if [[ ! -f "$BOT/libssl-1_1-x64.dll" || ! -f "$BOT/libcrypto-1_1-x64.dll" ]]; th
 fi
 
 if [[ "$missing" -ne 0 ]]; then
-  echo "Wine setup failed. See winescript_log.txt" | tee -a "$LOG"
+  echo "Wine setup failed. Log: $LOG" | tee -a "$LOG"
+  tail -n 40 "$LOG"
   exit 1
 fi
 

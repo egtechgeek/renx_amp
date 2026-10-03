@@ -21,7 +21,7 @@
         "OneShot": true
     },
     {
-        "UpdateStageName": "Initialise Wine",
+        "UpdateStageName": "Initialize Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",
         "UpdateSourceData": "/bin/bash",
