@@ -1,0 +1,48 @@
+[
+    {
+        "UpdateStageName": "Jupiter Bot Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "GithubRelease",
+        "UpdateSourceArgs": "JAJames/Jupiter-Bot",
+        "UpdateSourceData": "Jupiter.Bot.Binaries.1.1.0.zip",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": false,
+        "DeleteAfterExtract": true,
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Write RenX Config",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullBaseDir}}Configs/RenX.Core.ini",
+        "UpdateSourceData": "; Managed by the Jupiter Bot AMP template.\n; This server is the RenX section. Add another server as another section and list it on Servers.\n\nServers=RenX\n\n[RenX]\nHostname=\nPort=7777\nPassword=\nChanType=1\nAdminChanType=2\nCommandPrefix=!\nRules=Respect other players.\nReconnectDelay=10000\nMaxReconnectAttempts=-1\nRCONBan=false\nLocalSteamBan=true\nLocalIPBan=true\nLocalHWIDBan=true\nLocalRDNSBan=false\nLocalNameBan=false\nNeverSay=false\nResolvePlayerRDNS=true\nClientUpdateRate=2500\nBuildingUpdateRate=7500\nPingUpdateRate=60000\nPingTimeoutThreshold=10000\n",
+        "OverwriteExistingFiles": true,
+        "OneShot": true
+    },
+    {
+        "UpdateStageName": "Initialise Wine",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p /tmp/xdg-runtime && chmod 700 /tmp/xdg-runtime; export XDG_RUNTIME_DIR=/tmp/xdg-runtime WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\"; if [ -f \\\"$WINEPREFIX/system.reg\\\" ]; then echo \\\"Wine prefix already exists, skipping wineboot\\\"; wineserver -k >/dev/null 2>&1 || true; exit 0; fi; timeout --signal=KILL 180 /usr/bin/xvfb-run -a /usr/bin/wineboot --init --update; status=$?; if [ \\\"$status\\\" -eq 124 ] || [ \\\"$status\\\" -eq 137 ]; then echo \\\"wineboot timed out, continuing\\\"; wineserver -k >/dev/null 2>&1 || true; exit 0; fi; exit \\\"$status\\\"\"",
+        "SkipOnFailure": false
+    },
+    {
+        "UpdateStageName": "Winescript Download",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "https://raw.githubusercontent.com/egtechgeek/renx_amp/refs/heads/main/jupiter-botwinescript.sh",
+        "UpdateSourceArgs": "winescript.sh",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}",
+        "OverwriteExistingFiles": true
+    },
+    {
+        "UpdateStageName": "Install Windows Components",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "./winescript.sh",
+        "SkipOnFailure": false
+    }
+]

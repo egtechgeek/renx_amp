@@ -1,10 +1,10 @@
 {
-    "id": "437e4cb0-07c7-49bb-b34a-a5fcf017b0e7",
+    "id": "ffd3590b-2605-4a82-8d11-2c5ba90c329b",
     "authors": [
         "egtechgeek"
     ],
-    "origin": "https://github.com/egtechgeek/AMPTemplates.git",
-    "url": "https://github.com/egtechgeek/AMPTemplates",
+    "origin": "https://github.com/egtechgeek/renx_amp.git",
+    "url": "https://github.com/egtechgeek/renx_amp",
     "imagefile": "",
-    "prefix": "egtechgeek"
+    "prefix": "egtechgeek_renxamp"
 }
