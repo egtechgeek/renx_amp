@@ -162,6 +162,25 @@ choose_rcon_host() {
   echo "This container cannot reach port $port. The game server is on another Docker network, and the published port did not accept a connection." | tee -a "$LOG"
 }
 
+if [[ "${1:-}" == "run" ]]; then
+  cd "$BOT" || exit 1
+  fifo="$SCRIPTDIR/bot.stdin"
+  rm -f "$fifo"
+  if mkfifo "$fifo"; then
+    /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs < "$fifo" &
+    wine_pid=$!
+    cat > "$fifo" &
+    cat_pid=$!
+    trap 'kill "$wine_pid" "$cat_pid" 2>/dev/null || true' TERM INT
+    wait "$wine_pid"
+    status=$?
+    kill "$cat_pid" 2>/dev/null || true
+    rm -f "$fifo"
+    exit "$status"
+  fi
+  exec /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs
+fi
+
 if [[ "${1:-}" == "host" ]]; then
   choose_rcon_host "${2:-}"
   exit 0
