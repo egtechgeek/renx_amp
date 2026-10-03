@@ -28,6 +28,39 @@ container_ipv4() {
   hostname -I 2>/dev/null | awk '{print $1}'
 }
 
+route_gateway() {
+  local hex
+  hex=$(awk '$2=="00000000" {print $3; exit}' /proc/net/route 2>/dev/null)
+  [[ ${#hex} -eq 8 && "$hex" != "00000000" ]] || return 0
+  printf '%d.%d.%d.%d' "0x${hex:6:2}" "0x${hex:4:2}" "0x${hex:2:2}" "0x${hex:0:2}"
+}
+
+first_published_port() {
+  local port="$1" public="$2" ip gw dir
+  local -a candidates=()
+  gw=$(route_gateway)
+  candidates+=(172.17.0.1 172.18.0.1 172.19.0.1 172.20.0.1 172.21.0.1 172.22.0.1)
+  [[ -n "$gw" ]] && candidates+=("$gw")
+  [[ "$public" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && candidates+=("$public")
+  dir=$(mktemp -d)
+  for ip in "${candidates[@]}"; do
+    (
+      if port_open "$ip" "$port" 0.8; then
+        touch "$dir/$ip"
+      fi
+    ) &
+  done
+  wait
+  for ip in "${candidates[@]}"; do
+    if [[ -e "$dir/$ip" ]]; then
+      rm -rf "$dir"
+      printf '%s' "$ip"
+      return 0
+    fi
+  done
+  rm -rf "$dir"
+}
+
 private_ipv4() {
   [[ "$1" =~ ^(10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.) ]]
 }
@@ -77,8 +110,8 @@ write_rcon_host() {
   if [[ ! -f "$ini" ]]; then
     return 0
   fi
-  if grep -Eq "^Hostname=(host\\.docker\\.internal|172\\.[0-9.]+|${public})[[:space:]]*$" "$ini"; then
-    sed -Ei "s/^Hostname=(host\\.docker\\.internal|172\\.[0-9.]+|${public})[[:space:]]*$/Hostname=${ip}/" "$ini"
+  if grep -Eq "^Hostname=(host\\.docker\\.internal|127\\.0\\.0\\.1|172\\.[0-9.]+|${public})[[:space:]]*$" "$ini"; then
+    sed -Ei "s/^Hostname=(host\\.docker\\.internal|127\\.0\\.0\\.1|172\\.[0-9.]+|${public})[[:space:]]*$/Hostname=${ip}/" "$ini"
     echo "RCON host set to $ip" | tee -a "$LOG"
   fi
 }
@@ -90,6 +123,14 @@ choose_rcon_host() {
   local -a peers=() matches=()
   port=$(awk -F= '/^Port=/ {print $2; exit}' "$ini" 2>/dev/null | tr -d '[:space:]')
   [[ "$port" =~ ^[0-9]+$ ]] || port=7777
+
+  echo "Looking for the published game port $port on the Docker host" | tee -a "$LOG"
+  peer=$(first_published_port "$port" "$public")
+  if [[ -n "$peer" ]]; then
+    echo "Published port $port is open at $peer" | tee -a "$LOG"
+    write_rcon_host "$peer" "$public"
+    return 0
+  fi
 
   echo "Looking for a game server on port $port in this Docker network" | tee -a "$LOG"
   mapfile -t peers < <(find_docker_game_servers "$port")
@@ -118,14 +159,7 @@ choose_rcon_host() {
     return 0
   fi
 
-  if [[ "$public" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && port_open "$public" "$port" 1.5; then
-    echo "Public address $public is accepting port $port" | tee -a "$LOG"
-    write_rcon_host "$public" "$public"
-    return 0
-  fi
-
-  echo "No game server accepted port $port from this container. The public address is not reachable from inside Docker." | tee -a "$LOG"
-  write_rcon_host "127.0.0.1" "$public"
+  echo "This container cannot reach port $port. The game server is on another Docker network, and the published port did not accept a connection." | tee -a "$LOG"
 }
 
 if [[ "${1:-}" == "host" ]]; then
