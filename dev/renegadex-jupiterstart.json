@@ -1,0 +1,91 @@
+[
+    {
+        "UpdateStageName": "Write Jupiter Config.ini",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/jupiter-bot/Config.ini",
+        "UpdateSourceData": "Plugins={{Plugins}}\n",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Write Jupiter RenX Config",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/jupiter-bot/Configs/RenX.Core.ini",
+        "UpdateSourceData": "Servers=RenX\n\n[RenX]\nHostname=127.0.0.1\nPort={{$ServerPort}}\nPassword={{AdminPassword}}\nChanType={{RenxChanType}}\nAdminChanType={{RenxAdminChanType}}\nCommandPrefix={{RenxCommandPrefix}}\nRules={{RenxRules}}\nReconnectDelay={{RenxReconnectDelay}}\nMaxReconnectAttempts={{RenxMaxReconnectAttempts}}\nRCONBan={{RenxRCONBan}}\nLocalSteamBan={{RenxLocalSteamBan}}\nLocalIPBan={{RenxLocalIPBan}}\nLocalHWIDBan={{RenxLocalHWIDBan}}\nLocalRDNSBan={{RenxLocalRDNSBan}}\nLocalNameBan={{RenxLocalNameBan}}\nNeverSay={{RenxNeverSay}}\nResolvePlayerRDNS={{RenxResolvePlayerRDNS}}\nClientUpdateRate={{RenxClientUpdateRate}}\nBuildingUpdateRate={{RenxBuildingUpdateRate}}\nPingUpdateRate={{RenxPingUpdateRate}}\nPingTimeoutThreshold={{RenxPingTimeoutThreshold}}\n",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Write Jupiter HTTP Config",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/jupiter-bot/Configs/HTTPServer.ini",
+        "UpdateSourceData": "BindAddress={{HttpBindAddress}}\nBindPort={{HttpBindPort}}\n",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true
+    },
+    {
+        "UpdateStageName": "Write Jupiter IRC Config",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/jupiter-bot/Configs/IRC.Core.ini",
+        "UpdateSourceData": "Servers=\n\n[Default]\nPort={{IrcPort}}\nSSL={{IrcSSL}}\nSTARTTLS={{IrcSTARTTLS}}\nNick={{IrcNick}}\nAltNick={{IrcAltNick}}\nRealName={{IrcRealName}}\nPrefix={{IrcPrefix}}\nAutoReconnectDelay={{IrcAutoReconnectDelay}}\nMaxReconnectAttempts={{IrcMaxReconnectAttempts}}\nPrintOutput=1\n\n[IRC]\nHostname=\nPort={{IrcPort}}\nSSL={{IrcSSL}}\nSTARTTLS={{IrcSTARTTLS}}\nNick={{IrcNick}}\nAltNick={{IrcAltNick}}\nRealName={{IrcRealName}}\nSASL.Account=\nSASL.Password=\nPrefix={{IrcPrefix}}\nAutoReconnectDelay={{IrcAutoReconnectDelay}}\nMaxReconnectAttempts={{IrcMaxReconnectAttempts}}\nPrintOutput=1\n",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true,
+        "UpdateSourceConditionSetting": "EnableIrc",
+        "UpdateSourceConditionValue": "false"
+    },
+    {
+        "UpdateStageName": "Write Jupiter IRC Config",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "CreateFile",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/jupiter-bot/Configs/IRC.Core.ini",
+        "UpdateSourceData": "Servers=IRC\n\n[Default]\nPort={{IrcPort}}\nSSL={{IrcSSL}}\nSTARTTLS={{IrcSTARTTLS}}\nNick={{IrcNick}}\nAltNick={{IrcAltNick}}\nRealName={{IrcRealName}}\nPrefix={{IrcPrefix}}\nAutoReconnectDelay={{IrcAutoReconnectDelay}}\nMaxReconnectAttempts={{IrcMaxReconnectAttempts}}\nPrintOutput=1\n\n[IRC]\nHostname={{IrcHostname}}\nPort={{IrcPort}}\nSSL={{IrcSSL}}\nSTARTTLS={{IrcSTARTTLS}}\nNick={{IrcNick}}\nAltNick={{IrcAltNick}}\nRealName={{IrcRealName}}\nSASL.Account={{IrcSaslAccount}}\nSASL.Password={{IrcSaslPassword}}\nPrefix={{IrcPrefix}}\nAutoReconnectDelay={{IrcAutoReconnectDelay}}\nMaxReconnectAttempts={{IrcMaxReconnectAttempts}}\nPrintOutput=1\n\n[[Channels]]\n[[[{{IrcChannel}}}]]\nAutoJoin=True\nType={{RenxChanType}}\n\n[[[{{IrcAdminChannel}}}]]\nAutoJoin=True\nType={{RenxAdminChanType}}\n",
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true,
+        "UpdateSourceConditionSetting": "EnableIrc",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Start Jupiter Bot",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/winescript.sh jupiter {{$ServerPort}}",
+        "SkipOnFailure": true,
+        "UpdateSourceConditionSetting": "EnableJupiter",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Stop Jupiter Bot",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "{{$FullInstanceDir}}/winescript.sh jupiter-stop",
+        "SkipOnFailure": true,
+        "UpdateSourceConditionSetting": "EnableJupiter",
+        "UpdateSourceConditionValue": "false"
+    },
+    {
+        "UpdateStageName": "Start Jupiter Bot",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$bot='{{$FullInstanceDir}}/jupiter-bot'; if (!(Test-Path (Join-Path $bot 'Bot.exe'))) { exit 0 }; $mark='JUPITER_BOT_' + 'WAIT'; Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -ne $PID -and $_.CommandLine -like ('*' + $mark + '*') } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'Bot.exe' -and $_.CommandLine -like '*Config.ini*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; $port={{$ServerPort}}; $cmd='$env:' + $mark + '=''1''; $port=' + $port + '; $bot=''' + $bot + '''; foreach ($n in 1..180) { try { $c=New-Object Net.Sockets.TcpClient; $c.Connect(''127.0.0.1'',$port); $c.Close(); break } catch { Start-Sleep 1 } }; Set-Location $bot; & (Join-Path $bot ''Bot.exe'') -config Config.ini -pluginsdir Plugins -configsdir Configs *>> (Join-Path $bot ''bot.log'')'; Start-Process -WindowStyle Hidden powershell.exe -ArgumentList '-NoProfile','-Command',$cmd; Write-Output ('Jupiter Bot will connect to 127.0.0.1:' + $port + ' when Renegade X is listening. Log: ' + $bot + '/bot.log')\"",
+        "SkipOnFailure": true,
+        "UpdateSourceConditionSetting": "EnableJupiter",
+        "UpdateSourceConditionValue": "true"
+    },
+    {
+        "UpdateStageName": "Stop Jupiter Bot",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "powershell.exe",
+        "UpdateSourceArgs": "-NoProfile -Command \"$mark='JUPITER_BOT_' + 'WAIT'; Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -ne $PID -and $_.CommandLine -like ('*' + $mark + '*') } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'Bot.exe' -and $_.CommandLine -like '*Config.ini*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; Write-Output 'Jupiter Bot stopped'\"",
+        "SkipOnFailure": true,
+        "UpdateSourceConditionSetting": "EnableJupiter",
+        "UpdateSourceConditionValue": "false"
+    }
+]

@@ -1,0 +1,9 @@
+[
+    {
+        "Protocol":"Both",
+        "Port":7777,
+        "Ref":"ServerPort",
+        "Name":"Server Port",
+        "Description":"Game and RCON port. Jupiter Bot connects to this same port from inside the instance. It does not listen on a port of its own. IRC is an outbound connection, and the HTTP plugin is not loaded unless HTTPServer is added to Plugins."
+    }
+]
