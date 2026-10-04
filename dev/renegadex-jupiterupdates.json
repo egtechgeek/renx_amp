@@ -50,6 +50,18 @@
         "SkipOnFailure": false
     },
     {
+        "UpdateStageName": "Custom Map Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "{{CustomMapUrl}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true,
+        "UpdateSourceConditionSetting": "EnableCustomMapDownload",
+        "UpdateSourceConditionValue": "True"
+    },
+    {
         "UpdateStageName": "Initialize Wine",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "Executable",

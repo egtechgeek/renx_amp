@@ -1,9 +1,16 @@
 [
     {
-        "Protocol":"Both",
-        "Port":7777,
-        "Ref":"ServerPort",
-        "Name":"Server Port",
-        "Description":"Game and RCON port. Jupiter Bot connects to this same port from inside the instance. It does not listen on a port of its own. IRC is an outbound connection, and the HTTP plugin is not loaded unless HTTPServer is added to Plugins."
+        "Protocol": "Both",
+        "Port": 7777,
+        "Ref": "ServerPort",
+        "Name": "Server Port",
+        "Description": "Game and RCON port. Jupiter Bot connects to this same port from inside the instance. It does not listen on a port of its own. IRC is an outbound connection, and the HTTP plugin is not loaded unless HTTPServer is added to Plugins."
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 8080,
+        "Ref": "LadderWebPort",
+        "Name": "Ladder Web Port",
+        "Description": "Port for the Jupiter ladder pages. AMP publishes this port on the host, and Jupiter listens on the same port inside the instance. Change it under Edit Ports if 8080 is already taken. The listener follows that allocation."
     }
 ]
