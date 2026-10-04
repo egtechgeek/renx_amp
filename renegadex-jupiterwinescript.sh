@@ -8,6 +8,25 @@ jupiter_stop() {
   pkill -f 'Bot\.exe -config Config\.ini' >/dev/null 2>&1 || true
 }
 
+# Jupiter 1.1.0 HTTP::Server::think() calls accept() on an empty socket.
+# The listening port is in r12. Redirect that call and leave the rest of the function.
+patch_jupiter_http_accept() {
+  local dll="$1"
+  local sig
+  [[ -f "$dll" ]] || return 0
+  sig=$(dd if="$dll" bs=1 skip=$((0x115F5)) count=9 status=none | od -An -tx1 | tr -d ' \n')
+  if [[ "$sig" == "e9a836010090909090" ]]; then
+    return 0
+  fi
+  if [[ "$sig" != "488b07488bcfff5018" ]]; then
+    echo "Jupiter HTTP accept patch skipped"
+    return 0
+  fi
+  printf '\x49\x8b\x04\x24\x48\x8b\xc8\x48\x8b\x00\xff\x50\x18\xe9\x4a\xc9\xfe\xff' | dd of="$dll" bs=1 seek=$((0x24CA2)) conv=notrunc status=none
+  printf '\xe9\xa8\x36\x01\x00\x90\x90\x90\x90' | dd of="$dll" bs=1 seek=$((0x115F5)) conv=notrunc status=none
+  echo "Patched Jupiter HTTP accept"
+}
+
 container_ipv4() {
   local cidr
   if command -v ip >/dev/null 2>&1; then
@@ -66,12 +85,13 @@ if [[ "${1:-}" == "jupiter" ]]; then
     sed -i "s/^Hostname=.*/Hostname=${HOST}/" "$BOT/Configs/RenX.Core.ini"
   fi
   echo "Jupiter Bot will connect to ${HOST}:$PORT when Renegade X is listening. Log: $BOT/bot.log"
+  export -f patch_jupiter_http_accept
   setsid nohup bash -c '
     export JUPITER_BOT_WAIT=1
     export WINEPREFIX="$1/renegadex/.wine"
     export WINEARCH=win64
-    export WINEDEBUG=fixme-all
-    export WINEDLLOVERRIDES="mscoree,mshtml=;vcruntime140,vcruntime140_1,msvcp140,concrt140=n,b"
+    export WINEDEBUG=-all
+    export WINEDLLOVERRIDES="mscoree,mshtml="
     port="$2"
     bot="$3"
     host="$4"
@@ -83,15 +103,12 @@ if [[ "${1:-}" == "jupiter" ]]; then
     done
     cd "$bot" || exit 1
     echo "Starting Jupiter Bot under xvfb-run"
-    prefix="$1/renegadex/.wine/drive_c/windows/system32"
-    for dll in vcruntime140.dll vcruntime140_1.dll msvcp140.dll concrt140.dll; do
-      if [[ -f "$prefix/$dll" ]]; then
-        echo "native $dll present"
-      else
-        echo "native $dll missing"
-      fi
-    done
-    /usr/bin/xvfb-run -a stdbuf -oL -eL /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs
+    patch_jupiter_http_accept "$bot/jupiter.dll"
+    if command -v script >/dev/null 2>&1; then
+      /usr/bin/xvfb-run -a script -q -e -c "/usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs" /dev/null
+    else
+      /usr/bin/xvfb-run -a /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs
+    fi
     echo "Jupiter Bot exited with status $?"
   ' _ "$SCRIPTDIR" "$PORT" "$BOT" "$HOST" >> "$BOT/bot.log" 2>&1 < /dev/null &
   exit 0
