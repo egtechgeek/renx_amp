@@ -69,12 +69,26 @@
         "UpdateSourceArgs": "-c \"mkdir -p /tmp/xdg-runtime && chmod 700 /tmp/xdg-runtime; export XDG_RUNTIME_DIR=/tmp/xdg-runtime WINEPREFIX=\\\"{{$FullRootDir}}.wine\\\" WINEARCH=win64 WINEDEBUG=-all WINEDLLOVERRIDES=\\\"mscoree,mshtml=\\\"; if [ -f \\\"$WINEPREFIX/system.reg\\\" ]; then echo \\\"Wine prefix already exists, skipping wineboot\\\"; wineserver -k >/dev/null 2>&1 || true; exit 0; fi; timeout --signal=KILL 180 /usr/bin/xvfb-run -a /usr/bin/wineboot --init --update; status=$?; if [ \\\"$status\\\" -eq 124 ] || [ \\\"$status\\\" -eq 137 ]; then echo \\\"wineboot timed out, continuing\\\"; wineserver -k >/dev/null 2>&1 || true; exit 0; fi; exit \\\"$status\\\"\""
     },
     {
+        "UpdateStageName": "Create Jupiter Directory",
+        "UpdateSourcePlatform": "Linux",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "/bin/bash",
+        "UpdateSourceArgs": "-c \"mkdir -p \\\"{{$FullInstanceDir}}jupiter-bot\\\"\""
+    },
+    {
+        "UpdateStageName": "Create Jupiter Directory",
+        "UpdateSourcePlatform": "Windows",
+        "UpdateSource": "Executable",
+        "UpdateSourceData": "cmd.exe",
+        "UpdateSourceArgs": "/C if not exist \"{{$FullInstanceDir}}jupiter-bot\" mkdir \"{{$FullInstanceDir}}jupiter-bot\""
+    },
+    {
         "UpdateStageName": "Jupiter Bot Download",
         "UpdateSourcePlatform": "All",
         "UpdateSource": "GithubRelease",
         "UpdateSourceArgs": "JAJames/Jupiter-Bot",
         "UpdateSourceData": "Jupiter.Bot.Binaries.1.1.0.zip",
-        "UpdateSourceTarget": "{{$FullInstanceDir}}/jupiter-bot",
+        "UpdateSourceTarget": "{{$FullInstanceDir}}jupiter-bot",
         "UnzipUpdateSource": true,
         "OverwriteExistingFiles": false,
         "DeleteAfterExtract": true,
@@ -84,7 +98,7 @@
         "UpdateStageName": "Winescript Download",
         "UpdateSourcePlatform": "Linux",
         "UpdateSource": "FetchURL",
-        "UpdateSourceData": "https://raw.githubusercontent.com/egtechgeek/renx_amp/refs/heads/main/dev/renegadex-jupiterwinescript.sh",
+        "UpdateSourceData": "https://raw.githubusercontent.com/egtechgeek/renx_amp/refs/heads/main/renegadex-jupiterwinescript.sh",
         "UpdateSourceArgs": "winescript.sh",
         "UpdateSourceTarget": "{{$FullInstanceDir}}",
         "OverwriteExistingFiles": true

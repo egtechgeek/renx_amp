@@ -1124,7 +1124,7 @@
     {
         "DisplayName": "Money Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Money Crate.",
         "Keywords": "Rx_CrateType_Money_BaseProbability",
         "FieldName": "Rx_CrateType_Money_BaseProbability",
@@ -1137,7 +1137,7 @@
     {
         "DisplayName": "Money Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Money Crate.",
         "Keywords": "Rx_CrateType_Money_StartSpawnTime",
         "FieldName": "Rx_CrateType_Money_StartSpawnTime",
@@ -1150,7 +1150,7 @@
     {
         "DisplayName": "Money Crate Power Plant Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Power Plant Probability Increase for Money Crate.",
         "Keywords": "Rx_CrateType_Money_ProbabilityIncreaseWhenPowerPlantDestroyed",
         "FieldName": "Rx_CrateType_Money_ProbabilityIncreaseWhenPowerPlantDestroyed",
@@ -1163,7 +1163,7 @@
     {
         "DisplayName": "Money Crate Refinery Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Refinery Probability Increase for Money Crate.",
         "Keywords": "Rx_CrateType_Money_ProbabilityIncreaseWhenRefineryDestroyed",
         "FieldName": "Rx_CrateType_Money_ProbabilityIncreaseWhenRefineryDestroyed",
@@ -1176,7 +1176,7 @@
     {
         "DisplayName": "Money Crate Minutes To Give Small Sum",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Minutes To Give Small Sum for Money Crate.",
         "Keywords": "Rx_CrateType_Money_MinutesToGiveSmallSum",
         "FieldName": "Rx_CrateType_Money_MinutesToGiveSmallSum",
@@ -1189,7 +1189,7 @@
     {
         "DisplayName": "Super Money Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Super Money Crate.",
         "Keywords": "Rx_CrateType_SuperMoney_BaseProbability",
         "FieldName": "Rx_CrateType_SuperMoney_BaseProbability",
@@ -1202,7 +1202,7 @@
     {
         "DisplayName": "Super Money Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Super Money Crate.",
         "Keywords": "Rx_CrateType_SuperMoney_StartSpawnTime",
         "FieldName": "Rx_CrateType_SuperMoney_StartSpawnTime",
@@ -1215,7 +1215,7 @@
     {
         "DisplayName": "Super Money Crate Power Plant Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Power Plant Probability Increase for Super Money Crate.",
         "Keywords": "Rx_CrateType_SuperMoney_ProbabilityIncreaseWhenPowerPlantDestroyed",
         "FieldName": "Rx_CrateType_SuperMoney_ProbabilityIncreaseWhenPowerPlantDestroyed",
@@ -1228,7 +1228,7 @@
     {
         "DisplayName": "Super Money Crate Refinery Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Refinery Probability Increase for Super Money Crate.",
         "Keywords": "Rx_CrateType_SuperMoney_ProbabilityIncreaseWhenRefineryDestroyed",
         "FieldName": "Rx_CrateType_SuperMoney_ProbabilityIncreaseWhenRefineryDestroyed",
@@ -1241,7 +1241,7 @@
     {
         "DisplayName": "Super Money Crate Minutes To Give Small Sum",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Minutes To Give Small Sum for Super Money Crate.",
         "Keywords": "Rx_CrateType_SuperMoney_MinutesToGiveSmallSum",
         "FieldName": "Rx_CrateType_SuperMoney_MinutesToGiveSmallSum",
@@ -1254,7 +1254,7 @@
     {
         "DisplayName": "Character Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Character Crate.",
         "Keywords": "Rx_CrateType_Character_BaseProbability",
         "FieldName": "Rx_CrateType_Character_BaseProbability",
@@ -1267,7 +1267,7 @@
     {
         "DisplayName": "Character Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Character Crate.",
         "Keywords": "Rx_CrateType_Character_StartSpawnTime",
         "FieldName": "Rx_CrateType_Character_StartSpawnTime",
@@ -1280,7 +1280,7 @@
     {
         "DisplayName": "Character Crate Infantry Production Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Infantry Production Probability Increase for Character Crate.",
         "Keywords": "Rx_CrateType_Character_ProbabilityIncreaseWhenInfantryProductionDestroyed",
         "FieldName": "Rx_CrateType_Character_ProbabilityIncreaseWhenInfantryProductionDestroyed",
@@ -1293,7 +1293,7 @@
     {
         "DisplayName": "Spy Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Spy Crate.",
         "Keywords": "Rx_CrateType_Spy_BaseProbability",
         "FieldName": "Rx_CrateType_Spy_BaseProbability",
@@ -1306,7 +1306,7 @@
     {
         "DisplayName": "Spy Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Spy Crate.",
         "Keywords": "Rx_CrateType_Spy_StartSpawnTime",
         "FieldName": "Rx_CrateType_Spy_StartSpawnTime",
@@ -1319,7 +1319,7 @@
     {
         "DisplayName": "Spy Crate Minutes Until Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Minutes Until Probability Increase for Spy Crate.",
         "Keywords": "Rx_CrateType_Spy_MinutesUntilProbabiltyIncreaseStart",
         "FieldName": "Rx_CrateType_Spy_MinutesUntilProbabiltyIncreaseStart",
@@ -1332,7 +1332,7 @@
     {
         "DisplayName": "Spy Crate Probability Increase Per Minute",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Probability Increase Per Minute for Spy Crate.",
         "Keywords": "Rx_CrateType_Spy_ProbabilityIncreasePerMinute",
         "FieldName": "Rx_CrateType_Spy_ProbabilityIncreasePerMinute",
@@ -1345,7 +1345,7 @@
     {
         "DisplayName": "Spy Crate Max Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Max Probability Increase for Spy Crate.",
         "Keywords": "Rx_CrateType_Spy_MaxProbabilityIncrease",
         "FieldName": "Rx_CrateType_Spy_MaxProbabilityIncrease",
@@ -1358,7 +1358,7 @@
     {
         "DisplayName": "Spy Crate Allow Stealth Spy",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Allow Stealth Spy for Spy Crate.",
         "Keywords": "Rx_CrateType_Spy_bAllowStealthSpy",
         "FieldName": "Rx_CrateType_Spy_bAllowStealthSpy",
@@ -1373,7 +1373,7 @@
     {
         "DisplayName": "Epic Character Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Epic Character Crate.",
         "Keywords": "Rx_CrateType_EpicCharacter_BaseProbability",
         "FieldName": "Rx_CrateType_EpicCharacter_BaseProbability",
@@ -1386,7 +1386,7 @@
     {
         "DisplayName": "Epic Character Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Epic Character Crate.",
         "Keywords": "Rx_CrateType_EpicCharacter_StartSpawnTime",
         "FieldName": "Rx_CrateType_EpicCharacter_StartSpawnTime",
@@ -1399,7 +1399,7 @@
     {
         "DisplayName": "Vehicle Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Vehicle Crate.",
         "Keywords": "Rx_CrateType_Vehicle_BaseProbability",
         "FieldName": "Rx_CrateType_Vehicle_BaseProbability",
@@ -1412,7 +1412,7 @@
     {
         "DisplayName": "Vehicle Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Vehicle Crate.",
         "Keywords": "Rx_CrateType_Vehicle_StartSpawnTime",
         "FieldName": "Rx_CrateType_Vehicle_StartSpawnTime",
@@ -1425,7 +1425,7 @@
     {
         "DisplayName": "Vehicle Crate Vehicle Production Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Vehicle Production Probability Increase for Vehicle Crate.",
         "Keywords": "Rx_CrateType_Vehicle_ProbabilityIncreaseWhenVehicleProductionDestroyed",
         "FieldName": "Rx_CrateType_Vehicle_ProbabilityIncreaseWhenVehicleProductionDestroyed",
@@ -1438,7 +1438,7 @@
     {
         "DisplayName": "Classic Vehicle Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Classic Vehicle Crate.",
         "Keywords": "Rx_CrateType_ClassicVehicle_BaseProbability",
         "FieldName": "Rx_CrateType_ClassicVehicle_BaseProbability",
@@ -1451,7 +1451,7 @@
     {
         "DisplayName": "Classic Vehicle Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Classic Vehicle Crate.",
         "Keywords": "Rx_CrateType_ClassicVehicle_StartSpawnTime",
         "FieldName": "Rx_CrateType_ClassicVehicle_StartSpawnTime",
@@ -1464,7 +1464,7 @@
     {
         "DisplayName": "Classic Vehicle Crate Vehicle Production Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Vehicle Production Probability Increase for Classic Vehicle Crate.",
         "Keywords": "Rx_CrateType_ClassicVehicle_ProbabilityIncreaseWhenVehicleProductionDestroyed",
         "FieldName": "Rx_CrateType_ClassicVehicle_ProbabilityIncreaseWhenVehicleProductionDestroyed",
@@ -1477,7 +1477,7 @@
     {
         "DisplayName": "Tiberian Sun Vehicle Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Tiberian Sun Vehicle Crate.",
         "Keywords": "Rx_CrateType_TSVehicle_BaseProbability",
         "FieldName": "Rx_CrateType_TSVehicle_BaseProbability",
@@ -1490,7 +1490,7 @@
     {
         "DisplayName": "Tiberian Sun Vehicle Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Tiberian Sun Vehicle Crate.",
         "Keywords": "Rx_CrateType_TSVehicle_StartSpawnTime",
         "FieldName": "Rx_CrateType_TSVehicle_StartSpawnTime",
@@ -1503,7 +1503,7 @@
     {
         "DisplayName": "Tiberian Sun Vehicle Crate Vehicle Production Probability Increase",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Vehicle Production Probability Increase for Tiberian Sun Vehicle Crate.",
         "Keywords": "Rx_CrateType_TSVehicle_ProbabilityIncreaseWhenVehicleProductionDestroyed",
         "FieldName": "Rx_CrateType_TSVehicle_ProbabilityIncreaseWhenVehicleProductionDestroyed",
@@ -1516,7 +1516,7 @@
     {
         "DisplayName": "Damage Resistance Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Damage Resistance Crate.",
         "Keywords": "Rx_CrateType_DamageResistance_BaseProbability",
         "FieldName": "Rx_CrateType_DamageResistance_BaseProbability",
@@ -1529,7 +1529,7 @@
     {
         "DisplayName": "Damage Resistance Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Damage Resistance Crate.",
         "Keywords": "Rx_CrateType_DamageResistance_StartSpawnTime",
         "FieldName": "Rx_CrateType_DamageResistance_StartSpawnTime",
@@ -1542,7 +1542,7 @@
     {
         "DisplayName": "Refill Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Refill Crate.",
         "Keywords": "Rx_CrateType_Refill_BaseProbability",
         "FieldName": "Rx_CrateType_Refill_BaseProbability",
@@ -1555,7 +1555,7 @@
     {
         "DisplayName": "Refill Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Refill Crate.",
         "Keywords": "Rx_CrateType_Refill_StartSpawnTime",
         "FieldName": "Rx_CrateType_Refill_StartSpawnTime",
@@ -1568,7 +1568,7 @@
     {
         "DisplayName": "Speed Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Speed Crate.",
         "Keywords": "Rx_CrateType_Speed_BaseProbability",
         "FieldName": "Rx_CrateType_Speed_BaseProbability",
@@ -1581,7 +1581,7 @@
     {
         "DisplayName": "Speed Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Speed Crate.",
         "Keywords": "Rx_CrateType_Speed_StartSpawnTime",
         "FieldName": "Rx_CrateType_Speed_StartSpawnTime",
@@ -1594,7 +1594,7 @@
     {
         "DisplayName": "Random Weapon Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Random Weapon Crate.",
         "Keywords": "Rx_CrateType_RandomWeapon_BaseProbability",
         "FieldName": "Rx_CrateType_RandomWeapon_BaseProbability",
@@ -1607,7 +1607,7 @@
     {
         "DisplayName": "Random Weapon Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Random Weapon Crate.",
         "Keywords": "Rx_CrateType_RandomWeapon_StartSpawnTime",
         "FieldName": "Rx_CrateType_RandomWeapon_StartSpawnTime",
@@ -1620,7 +1620,7 @@
     {
         "DisplayName": "Deathmatch Random Weapon Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Deathmatch Random Weapon Crate.",
         "Keywords": "Rx_CrateType_DMRandomWeapon_BaseProbability",
         "FieldName": "Rx_CrateType_DMRandomWeapon_BaseProbability",
@@ -1633,7 +1633,7 @@
     {
         "DisplayName": "Deathmatch Random Weapon Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Deathmatch Random Weapon Crate.",
         "Keywords": "Rx_CrateType_DMRandomWeapon_StartSpawnTime",
         "FieldName": "Rx_CrateType_DMRandomWeapon_StartSpawnTime",
@@ -1646,7 +1646,7 @@
     {
         "DisplayName": "Veterancy Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Veterancy Crate.",
         "Keywords": "Rx_CrateType_Veterancy_BaseProbability",
         "FieldName": "Rx_CrateType_Veterancy_BaseProbability",
@@ -1659,7 +1659,7 @@
     {
         "DisplayName": "Veterancy Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Veterancy Crate.",
         "Keywords": "Rx_CrateType_Veterancy_StartSpawnTime",
         "FieldName": "Rx_CrateType_Veterancy_StartSpawnTime",
@@ -1672,7 +1672,7 @@
     {
         "DisplayName": "Teleport Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Teleport Crate.",
         "Keywords": "Rx_CrateType_Teleport_BaseProbability",
         "FieldName": "Rx_CrateType_Teleport_BaseProbability",
@@ -1685,7 +1685,7 @@
     {
         "DisplayName": "Teleport Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Teleport Crate.",
         "Keywords": "Rx_CrateType_Teleport_StartSpawnTime",
         "FieldName": "Rx_CrateType_Teleport_StartSpawnTime",
@@ -1698,7 +1698,7 @@
     {
         "DisplayName": "Base Power Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Base Power Crate.",
         "Keywords": "Rx_CrateType_BasePower_BaseProbability",
         "FieldName": "Rx_CrateType_BasePower_BaseProbability",
@@ -1711,7 +1711,7 @@
     {
         "DisplayName": "Base Power Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Base Power Crate.",
         "Keywords": "Rx_CrateType_BasePower_StartSpawnTime",
         "FieldName": "Rx_CrateType_BasePower_StartSpawnTime",
@@ -1724,7 +1724,7 @@
     {
         "DisplayName": "Radar Sweep Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Radar Sweep Crate.",
         "Keywords": "Rx_CrateType_RadarSweep_BaseProbability",
         "FieldName": "Rx_CrateType_RadarSweep_BaseProbability",
@@ -1737,7 +1737,7 @@
     {
         "DisplayName": "Radar Sweep Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Radar Sweep Crate.",
         "Keywords": "Rx_CrateType_RadarSweep_StartSpawnTime",
         "FieldName": "Rx_CrateType_RadarSweep_StartSpawnTime",
@@ -1750,7 +1750,7 @@
     {
         "DisplayName": "Slow Down Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Slow Down Crate.",
         "Keywords": "Rx_CrateType_SlowDown_BaseProbability",
         "FieldName": "Rx_CrateType_SlowDown_BaseProbability",
@@ -1763,7 +1763,7 @@
     {
         "DisplayName": "Slow Down Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Slow Down Crate.",
         "Keywords": "Rx_CrateType_SlowDown_StartSpawnTime",
         "FieldName": "Rx_CrateType_SlowDown_StartSpawnTime",
@@ -1776,7 +1776,7 @@
     {
         "DisplayName": "Kamikaze Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Kamikaze Crate.",
         "Keywords": "Rx_CrateType_Kamikaze_BaseProbability",
         "FieldName": "Rx_CrateType_Kamikaze_BaseProbability",
@@ -1789,7 +1789,7 @@
     {
         "DisplayName": "Kamikaze Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Kamikaze Crate.",
         "Keywords": "Rx_CrateType_Kamikaze_StartSpawnTime",
         "FieldName": "Rx_CrateType_Kamikaze_StartSpawnTime",
@@ -1802,7 +1802,7 @@
     {
         "DisplayName": "Abduction Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Abduction Crate.",
         "Keywords": "Rx_CrateType_Abduction_BaseProbability",
         "FieldName": "Rx_CrateType_Abduction_BaseProbability",
@@ -1815,7 +1815,7 @@
     {
         "DisplayName": "Abduction Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Abduction Crate.",
         "Keywords": "Rx_CrateType_Abduction_StartSpawnTime",
         "FieldName": "Rx_CrateType_Abduction_StartSpawnTime",
@@ -1828,7 +1828,7 @@
     {
         "DisplayName": "Suicide Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Suicide Crate.",
         "Keywords": "Rx_CrateType_Suicide_BaseProbability",
         "FieldName": "Rx_CrateType_Suicide_BaseProbability",
@@ -1841,7 +1841,7 @@
     {
         "DisplayName": "Suicide Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Suicide Crate.",
         "Keywords": "Rx_CrateType_Suicide_StartSpawnTime",
         "FieldName": "Rx_CrateType_Suicide_StartSpawnTime",
@@ -1854,7 +1854,7 @@
     {
         "DisplayName": "Time Bomb Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Time Bomb Crate.",
         "Keywords": "Rx_CrateType_TimeBomb_BaseProbability",
         "FieldName": "Rx_CrateType_TimeBomb_BaseProbability",
@@ -1867,7 +1867,7 @@
     {
         "DisplayName": "Time Bomb Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Time Bomb Crate.",
         "Keywords": "Rx_CrateType_TimeBomb_StartSpawnTime",
         "FieldName": "Rx_CrateType_TimeBomb_StartSpawnTime",
@@ -1880,7 +1880,7 @@
     {
         "DisplayName": "Nuke Crate Base Probability",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Base Probability for Nuke Crate.",
         "Keywords": "Rx_CrateType_Nuke_BaseProbability",
         "FieldName": "Rx_CrateType_Nuke_BaseProbability",
@@ -1893,7 +1893,7 @@
     {
         "DisplayName": "Nuke Crate Start Spawn Time",
         "Category": "Renegade X:stadia_controller",
-        "Subcategory": "Crates:redeem:6",
+        "Subcategory": "Gameplay:joystick:2",
         "Description": "Start Spawn Time for Nuke Crate.",
         "Keywords": "Rx_CrateType_Nuke_StartSpawnTime",
         "FieldName": "Rx_CrateType_Nuke_StartSpawnTime",
