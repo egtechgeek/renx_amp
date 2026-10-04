@@ -21,7 +21,7 @@
         "FieldName": "ServerName",
         "InputType": "text",
         "ParamFieldName": "Engine.GameReplicationInfo.ServerName",
-        "DefaultValue": "AMP Powered Renegade X Server",
+        "DefaultValue": "Renegade X Server [Powered By AMP]",
         "EnumValues": {}
     },
     {

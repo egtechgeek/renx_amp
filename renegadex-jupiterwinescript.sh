@@ -55,9 +55,16 @@ if [[ "${1:-}" == "jupiter" ]]; then
       sleep 1
     done
     cd "$bot" || exit 1
-    echo "Starting Jupiter Bot"
-    exec /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs
+    echo "Starting Jupiter Bot under xvfb-run"
+    exec /usr/bin/xvfb-run -a /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs
   ' _ "$SCRIPTDIR" "$PORT" "$BOT" "$HOST" >> "$BOT/bot.log" 2>&1 < /dev/null &
+  exit 0
+fi
+
+export WINEPREFIX="$SCRIPTDIR/renegadex/.wine"
+BOT="$SCRIPTDIR/jupiter-bot"
+if [[ -f "$WINEPREFIX/system.reg" && -f "$BOT/libssl-1_1-x64.dll" && -f "$BOT/libcrypto-1_1-x64.dll" ]]; then
+  echo "Wine components already installed"
   exit 0
 fi
 
@@ -70,7 +77,6 @@ done
 read -r DPY_NUM < display.log
 rm display.log
 
-export WINEPREFIX="$SCRIPTDIR/renegadex/.wine"
 export WINEDLLOVERRIDES="mscoree,mshtml="
 export WINEARCH=win64
 export WINEDEBUG=fixme-all
@@ -86,7 +92,6 @@ for PACKAGE in $PACKAGES; do
 done
 rm -rf ~/.cache/winetricks ~/.cache/fontconfig
 
-BOT="$SCRIPTDIR/jupiter-bot"
 if [[ -d "$BOT" ]]; then
   if ! find "$WINEPREFIX" -iname 'vcruntime140_1.dll' -type f 2>/dev/null | grep -q .; then
     echo "Installing Visual C++ 2019 runtime for Jupiter Bot"
