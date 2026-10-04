@@ -24,6 +24,33 @@ if [[ "${1:-}" == "jupiter-stop" ]]; then
   exit 0
 fi
 
+if [[ "${1:-}" == "game" ]]; then
+  shift
+  export WINEPREFIX="$SCRIPTDIR/renegadex/.wine"
+  export WINEARCH=win64
+  export WINEDEBUG=-all
+  export WINEDLLOVERRIDES="mscoree,mshtml="
+  GAME_PID=
+  stop_game() {
+    jupiter_stop
+    if [[ -n "${GAME_PID}" ]] && kill -0 "$GAME_PID" 2>/dev/null; then
+      kill -INT "$GAME_PID" 2>/dev/null || true
+    fi
+    (
+      sleep 12
+      WINEPREFIX="$SCRIPTDIR/renegadex/.wine" wineserver -k >/dev/null 2>&1 || true
+    ) &
+  }
+  trap stop_game INT TERM
+  /usr/bin/xvfb-run -a /usr/bin/wine "./UDK.exe" "$@" &
+  GAME_PID=$!
+  wait "$GAME_PID"
+  status=$?
+  jupiter_stop
+  WINEPREFIX="$SCRIPTDIR/renegadex/.wine" wineserver -k >/dev/null 2>&1 || true
+  exit "$status"
+fi
+
 if [[ "${1:-}" == "jupiter" ]]; then
   BOT="$SCRIPTDIR/jupiter-bot"
   PORT="${2:-7777}"
@@ -43,8 +70,8 @@ if [[ "${1:-}" == "jupiter" ]]; then
     export JUPITER_BOT_WAIT=1
     export WINEPREFIX="$1/renegadex/.wine"
     export WINEARCH=win64
-    export WINEDEBUG=-all
-    export WINEDLLOVERRIDES="mscoree,mshtml=;vcruntime140,vcruntime140_1,msvcp140,concrt140=n"
+    export WINEDEBUG=fixme-all
+    export WINEDLLOVERRIDES="mscoree,mshtml=;vcruntime140,vcruntime140_1,msvcp140,concrt140=n,b"
     port="$2"
     bot="$3"
     host="$4"
@@ -56,7 +83,16 @@ if [[ "${1:-}" == "jupiter" ]]; then
     done
     cd "$bot" || exit 1
     echo "Starting Jupiter Bot under xvfb-run"
-    exec /usr/bin/xvfb-run -a /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs
+    prefix="$1/renegadex/.wine/drive_c/windows/system32"
+    for dll in vcruntime140.dll vcruntime140_1.dll msvcp140.dll concrt140.dll; do
+      if [[ -f "$prefix/$dll" ]]; then
+        echo "native $dll present"
+      else
+        echo "native $dll missing"
+      fi
+    done
+    /usr/bin/xvfb-run -a stdbuf -oL -eL /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs
+    echo "Jupiter Bot exited with status $?"
   ' _ "$SCRIPTDIR" "$PORT" "$BOT" "$HOST" >> "$BOT/bot.log" 2>&1 < /dev/null &
   exit 0
 fi
