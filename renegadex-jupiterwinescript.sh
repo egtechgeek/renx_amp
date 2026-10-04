@@ -44,7 +44,7 @@ if [[ "${1:-}" == "jupiter" ]]; then
     export WINEPREFIX="$1/renegadex/.wine"
     export WINEARCH=win64
     export WINEDEBUG=-all
-    export WINEDLLOVERRIDES="mscoree,mshtml="
+    export WINEDLLOVERRIDES="mscoree,mshtml=;vcruntime140,vcruntime140_1,msvcp140,concrt140=n"
     port="$2"
     bot="$3"
     host="$4"
