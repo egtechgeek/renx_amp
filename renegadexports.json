@@ -5,5 +5,12 @@
         "Ref":"ServerPort",
         "Name":"Server Port",
         "Description":"Port for game and RCON traffic"
+    },
+    {
+        "Protocol": "TCP",
+        "Port": 6969,
+        "Ref": "WebListenPort",
+        "Name": "Stats Web Port",
+        "Description": "Port for Renegade X's own stats pages. Nothing listens here until Enable Stats Web Server is on. 6969 is the game's default. Keep it the same as Stats Web Port in the settings."
     }
 ]

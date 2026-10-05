@@ -3,12 +3,12 @@
         "DisplayName": "Plugins",
         "Category": "Jupiter Bot:smart_toy",
         "Subcategory": "Plugins:extension:1",
-        "Description": "Plugins to load, separated by spaces. Do not include .dll or .so. HTTPServer must stay before RenX.Ladder.Web. The ladder plugins serve the leaderboard, search, and profile pages on the Ladder Web Port. Remove the RenX names to point this bot at a different game.",
+        "Description": "Plugins to load, separated by spaces. Do not include .dll or .so. RenX.Core is the game connection. HTTPServer and RenX.Ladder.Web are omitted because the ladder pages are outdated and their links point at domains that have changed. The other RenX.Ladder plugins still record stats. Remove the RenX names to point this bot at a different game.",
         "Keywords": "plugins",
         "FieldName": "Plugins",
         "InputType": "text",
         "ParamFieldName": "",
-        "DefaultValue": "IRC.Core CoreCommands PluginManager ExtraCommands RenX.Core RenX.Commands RenX.Logging RenX.Medals HTTPServer RenX.Ladder RenX.Ladder.All-Time RenX.Ladder.Daily RenX.Ladder.Weekly RenX.Ladder.Monthly RenX.Ladder.Yearly RenX.Ladder.Web",
+        "DefaultValue": "IRC.Core CoreCommands PluginManager ExtraCommands RenX.Core RenX.Commands RenX.Logging RenX.Medals RenX.Ladder RenX.Ladder.All-Time RenX.Ladder.Daily RenX.Ladder.Weekly RenX.Ladder.Monthly RenX.Ladder.Yearly",
         "EnumValues": {}
     },
     {

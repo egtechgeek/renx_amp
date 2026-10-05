@@ -38,5 +38,10 @@
         "ConfigFile": "UDKGame/Config/UDKStatAPI.ini",
         "ConfigType": "ini",
         "AutoMap": true
+    },
+    {
+        "ConfigFile": "UDKGame/Config/UDKWeb.ini",
+        "ConfigType": "ini",
+        "AutoMap": true
     }
 ]
