@@ -320,12 +320,12 @@ if [[ "${1:-}" == "host" ]]; then
   exit 0
 fi
 
-echo "Jupiter Bot Wine setup. Log: $LOG" | tee "$LOG"
-
 if [[ ! -d "$BOT" ]]; then
-  echo "Jupiter Bot directory not found: $BOT" | tee -a "$LOG" "$BOTLOG"
+  echo "Jupiter Bot directory not found: $BOT"
   exit 1
 fi
+
+echo "Jupiter Bot Wine setup. Log: $LOG" | tee "$LOG"
 
 wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -O "$SCRIPTDIR/winetricks"
 chmod +x "$SCRIPTDIR/winetricks"
