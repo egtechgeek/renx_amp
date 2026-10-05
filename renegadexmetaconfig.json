@@ -23,5 +23,20 @@
         "ConfigFile": "UDKGame/Config/UDKEngine.ini",
         "ConfigType": "ini",
         "AutoMap": true
+    },
+    {
+        "ConfigFile": "UDKGame/Config/UDKRenegadeXAISetup.ini",
+        "ConfigType": "ini",
+        "AutoMap": true
+    },
+    {
+        "ConfigFile": "UDKGame/Config/UDKFPSMonitor.ini",
+        "ConfigType": "ini",
+        "AutoMap": true
+    },
+    {
+        "ConfigFile": "UDKGame/Config/UDKStatAPI.ini",
+        "ConfigType": "ini",
+        "AutoMap": true
     }
 ]

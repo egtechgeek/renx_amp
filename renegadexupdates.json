@@ -50,6 +50,18 @@
         "SkipOnFailure":false
     },
     {
+        "UpdateStageName": "Custom Map Download",
+        "UpdateSourcePlatform": "All",
+        "UpdateSource": "FetchURL",
+        "UpdateSourceData": "{{CustomMapUrl}}",
+        "UpdateSourceTarget": "{{$FullBaseDir}}",
+        "UnzipUpdateSource": true,
+        "OverwriteExistingFiles": true,
+        "SkipOnFailure": true,
+        "UpdateSourceConditionSetting": "EnableCustomMapDownload",
+        "UpdateSourceConditionValue": "True"
+    },
+    {
         "UpdateStageName":"Initialize Wine",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"Executable",
@@ -60,7 +72,7 @@
         "UpdateStageName":"Winescript Download",
         "UpdateSourcePlatform":"Linux",
         "UpdateSource":"FetchURL",
-        "UpdateSourceData":"https://raw.githubusercontent.com/egtechgeek/AMPTemplates/refs/heads/main/renegadexwinescript.sh",
+        "UpdateSourceData":"https://raw.githubusercontent.com/egtechgeek/renx_amp/refs/heads/main/renegadexwinescript.sh",
         "UpdateSourceArgs":"winescript.sh",
         "UpdateSourceTarget":"{{$FullInstanceDir}}",
         "OverwriteExistingFiles":true

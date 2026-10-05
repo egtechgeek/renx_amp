@@ -1,0 +1,9 @@
+[
+    {
+        "Protocol": "TCP",
+        "Port": 8085,
+        "Ref": "LadderWebPort",
+        "Name": "Ladder Web Port",
+        "Description": "Port for the Jupiter ladder pages. AMP publishes this port on the host, and Jupiter listens on the same port inside the instance. 8085 avoids the AMP web interface on 8080. The listener follows the allocation under Edit Ports."
+    }
+]
