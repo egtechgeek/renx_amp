@@ -3,13 +3,20 @@
 # jupiter.dll requires libssl-1_1-x64.dll and libcrypto-1_1-x64.dll.
 # Bot.exe, jupiter.dll, and jessilib.dll require the Visual C++ 2019 runtime.
 
+# This script lives in the instance directory, as Renegade X's winescript does.
+# The bot, its Wine prefix, and its logs live in jupiter-bot/, which the instance file manager can open.
 SCRIPTDIR=$(cd "$(dirname "$0")" && pwd)
 BOT="$SCRIPTDIR/jupiter-bot"
-LOG="$SCRIPTDIR/winescript_log.txt"
+LOG="$BOT/winescript_log.txt"
+BOTLOG="$BOT/bot.log"
+
+startup() {
+  echo "$@" | tee -a "$LOG" "$BOTLOG"
+}
 OPENSSL_URL="https://slproweb.com/download/Win64OpenSSL_Light-1_1_1w.exe"
 OPENSSL_EXE="$SCRIPTDIR/Win64OpenSSL_Light-1_1_1w.exe"
 
-export WINEPREFIX="$BOT/.wine"
+export WINEPREFIX="$SCRIPTDIR/jupiter-bot/.wine"
 export WINEARCH=win64
 export WINEDEBUG=-all
 export WINEDLLOVERRIDES="mscoree,mshtml="
@@ -111,7 +118,7 @@ use_rcon_target() {
   fi
   printf '%s %s\n' "$ip" "$port" > "$SCRIPTDIR/rcon.upstream"
   write_rcon_host "127.0.0.1" "$public"
-  echo "Forwarding 127.0.0.1:$port to $ip:$port" | tee -a "$LOG"
+  echo "Forwarding 127.0.0.1:$port to $ip:$port" | tee -a "$LOG" "$BOTLOG"
 }
 
 start_rcon_forward() {
@@ -157,12 +164,12 @@ END
   local i
   for ((i=0; i<20; i++)); do
     if port_open 127.0.0.1 "$port" 0.2; then
-      echo "Local forward is listening on 127.0.0.1:$port" | tee -a "$LOG"
+      echo "Local forward is listening on 127.0.0.1:$port" | tee -a "$LOG" "$BOTLOG"
       return 0
     fi
     sleep 0.1
   done
-  echo "Local forward did not start" | tee -a "$LOG"
+  echo "Local forward did not start" | tee -a "$LOG" "$BOTLOG"
 }
 
 write_rcon_host() {
@@ -175,7 +182,7 @@ write_rcon_host() {
   fi
   if grep -Eq "^Hostname=(host\\.docker\\.internal|127\\.0\\.0\\.1|172\\.[0-9.]+|${public})[[:space:]]*$" "$ini"; then
     sed -Ei "s/^Hostname=(host\\.docker\\.internal|127\\.0\\.0\\.1|172\\.[0-9.]+|${public})[[:space:]]*$/Hostname=${ip}/" "$ini"
-    echo "RCON host set to $ip" | tee -a "$LOG"
+    echo "RCON host set to $ip" | tee -a "$LOG" "$BOTLOG"
   fi
 }
 
@@ -188,29 +195,29 @@ choose_rcon_host() {
   [[ "$port" =~ ^[0-9]+$ ]] || port=7777
 
   if port_open 127.0.0.1 "$port"; then
-    echo "Game port $port is open on 127.0.0.1" | tee -a "$LOG"
+    echo "Game port $port is open on 127.0.0.1" | tee -a "$LOG" "$BOTLOG"
     use_rcon_target "127.0.0.1" "$public" "$port"
     return 0
   fi
 
-  echo "Looking for the published game port $port on the Docker host" | tee -a "$LOG"
+  echo "Looking for the published game port $port on the Docker host" | tee -a "$LOG" "$BOTLOG"
   peer=$(first_published_port "$port" "$public")
   if [[ -n "$peer" ]]; then
-    echo "Published port $port is open at $peer" | tee -a "$LOG"
+    echo "Published port $port is open at $peer" | tee -a "$LOG" "$BOTLOG"
     use_rcon_target "$peer" "$public" "$port"
     return 0
   fi
 
-  echo "Looking for a game server on port $port in this Docker network" | tee -a "$LOG"
+  echo "Looking for a game server on port $port in this Docker network" | tee -a "$LOG" "$BOTLOG"
   mapfile -t peers < <(find_docker_game_servers "$port")
   if ((${#peers[@]} == 1)); then
-    echo "Game server found at ${peers[0]}" | tee -a "$LOG"
+    echo "Game server found at ${peers[0]}" | tee -a "$LOG" "$BOTLOG"
     use_rcon_target "${peers[0]}" "$public" "$port"
     return 0
   fi
   if ((${#peers[@]} > 1)); then
-    echo "Several servers are listening on port $port:" | tee -a "$LOG"
-    printf '  %s\n' "${peers[@]}" | tee -a "$LOG"
+    echo "Several servers are listening on port $port:" | tee -a "$LOG" "$BOTLOG"
+    printf '  %s\n' "${peers[@]}" | tee -a "$LOG" "$BOTLOG"
     pass=$(sed -n 's/^Password=//p' "$ini" | head -n 1 | tr -d '\r')
     if [[ -n "$pass" ]]; then
       for peer in "${peers[@]}"; do
@@ -220,16 +227,16 @@ choose_rcon_host() {
       done
     fi
     if ((${#matches[@]} == 1)); then
-      echo "RCON password matched ${matches[0]}" | tee -a "$LOG"
+      echo "RCON password matched ${matches[0]}" | tee -a "$LOG" "$BOTLOG"
       use_rcon_target "${matches[0]}" "$public" "$port"
       return 0
     fi
-    echo "Set RCON Host to the server this bot should join." | tee -a "$LOG"
+    echo "Set RCON Host to the server this bot should join." | tee -a "$LOG" "$BOTLOG"
     return 0
   fi
 
   rm -f "$SCRIPTDIR/rcon.upstream"
-  echo "This container cannot reach port $port. With host networking the game server is 127.0.0.1. With host networking off it is the bridge gateway plus the published port." | tee -a "$LOG"
+  echo "This container cannot reach port $port. With host networking the game server is 127.0.0.1. With host networking off it is the bridge gateway plus the published port." | tee -a "$LOG" "$BOTLOG"
 }
 
 # Jupiter 1.1.0 HTTP::Server::think() calls accept() on an empty socket.
@@ -241,16 +248,16 @@ patch_jupiter_http_accept() {
   [[ -f "$dll" ]] || return 0
   sig=$(dd if="$dll" bs=1 skip=$((0x115F5)) count=9 status=none | od -An -tx1 | tr -d ' \n')
   if [[ "$sig" == "e9a836010090909090" ]]; then
-    echo "Jupiter HTTP accept patch already present"
+    startup "Jupiter HTTP accept patch already present"
     return 0
   fi
   if [[ "$sig" != "488b07488bcfff5018" ]]; then
-    echo "Jupiter HTTP accept patch skipped"
+    startup "Jupiter HTTP accept patch skipped"
     return 0
   fi
   printf '\x49\x8b\x04\x24\x48\x8b\xc8\x48\x8b\x00\xff\x50\x18\xe9\x4a\xc9\xfe\xff' | dd of="$dll" bs=1 seek=$((0x24CA2)) conv=notrunc status=none
   printf '\xe9\xa8\x36\x01\x00\x90\x90\x90\x90' | dd of="$dll" bs=1 seek=$((0x115F5)) conv=notrunc status=none
-  echo "Patched Jupiter HTTP accept"
+  startup "Patched Jupiter HTTP accept"
 }
 
 # This container has its own display. It does not use Renegade X's display.
@@ -269,15 +276,16 @@ start_own_display() {
   rm -f "$log"
   exec 6>&-
   if [[ -z "${DPY_NUM:-}" ]]; then
-    echo "Jupiter display did not start"
+    startup "Jupiter display did not start"
     return 1
   fi
   export DISPLAY=":$DPY_NUM"
-  echo "Jupiter display is :$DPY_NUM"
+  startup "Jupiter display is :$DPY_NUM"
 }
 
 if [[ "${1:-}" == "run" ]]; then
   cd "$BOT" || exit 1
+  startup "Starting Jupiter Bot"
   patch_jupiter_http_accept "$BOT/jupiter.dll"
   forward_pid=""
   XVFB_PID=""
@@ -293,7 +301,7 @@ if [[ "${1:-}" == "run" ]]; then
     rm -f "$fifo"
   }
   if mkfifo "$fifo"; then
-    /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs < "$fifo" &
+    /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs < "$fifo" 2>> "$BOTLOG" &
     wine_pid=$!
     cat > "$fifo" &
     cat_pid=$!
@@ -303,10 +311,11 @@ if [[ "${1:-}" == "run" ]]; then
     cleanup
     exit "$status"
   fi
-  exec /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs
+  exec /usr/bin/wine Bot.exe -config Config.ini -pluginsdir Plugins -configsdir Configs 2>> "$BOTLOG"
 fi
 
 if [[ "${1:-}" == "host" ]]; then
+  : > "$BOTLOG"
   choose_rcon_host "${2:-}"
   exit 0
 fi
@@ -314,18 +323,18 @@ fi
 echo "Jupiter Bot Wine setup. Log: $LOG" | tee "$LOG"
 
 if [[ ! -d "$BOT" ]]; then
-  echo "Jupiter Bot directory not found: $BOT" | tee -a "$LOG"
+  echo "Jupiter Bot directory not found: $BOT" | tee -a "$LOG" "$BOTLOG"
   exit 1
 fi
 
 wget -q -N https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -O "$SCRIPTDIR/winetricks"
 chmod +x "$SCRIPTDIR/winetricks"
 
-echo "Installing Visual C++ 2019 runtime" | tee -a "$LOG"
+echo "Installing Visual C++ 2019 runtime" | tee -a "$LOG" "$BOTLOG"
 timeout --signal=KILL 600 xvfb-run -a "$SCRIPTDIR/winetricks" -q vcrun2019 >> "$LOG" 2>&1 || true
 
 if [[ ! -f "$BOT/libssl-1_1-x64.dll" || ! -f "$BOT/libcrypto-1_1-x64.dll" ]]; then
-  echo "Installing OpenSSL 1.1.1 Win64 Light" | tee -a "$LOG"
+  echo "Installing OpenSSL 1.1.1 Win64 Light" | tee -a "$LOG" "$BOTLOG"
   wget -q -N "$OPENSSL_URL" -O "$OPENSSL_EXE"
   timeout --signal=KILL 300 xvfb-run -a wine "$OPENSSL_EXE" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /DIR=C:\\OpenSSL-Win64 >> "$LOG" 2>&1 || true
   ssl_dll=$(find "$WINEPREFIX/drive_c" -name 'libssl-1_1-x64.dll' 2>/dev/null | head -n 1)
@@ -347,21 +356,21 @@ find_dll() {
 missing=0
 runtime_dll=$(find_dll "$WINEPREFIX" "vcruntime140_1.dll")
 if [[ -z "$runtime_dll" ]]; then
-  echo "Missing vcruntime140_1.dll" | tee -a "$LOG"
+  echo "Missing vcruntime140_1.dll" | tee -a "$LOG" "$BOTLOG"
   missing=1
 else
   cp -f "$runtime_dll" "$WINEPREFIX/drive_c/windows/system32/vcruntime140_1.dll" 2>/dev/null || true
 fi
 if [[ ! -f "$BOT/libssl-1_1-x64.dll" || ! -f "$BOT/libcrypto-1_1-x64.dll" ]]; then
-  echo "Missing OpenSSL 1.1 DLLs next to Bot.exe" | tee -a "$LOG"
+  echo "Missing OpenSSL 1.1 DLLs next to Bot.exe" | tee -a "$LOG" "$BOTLOG"
   missing=1
 fi
 
 if [[ "$missing" -ne 0 ]]; then
-  echo "Wine setup failed. Log: $LOG" | tee -a "$LOG"
+  echo "Wine setup failed. Log: $LOG" | tee -a "$LOG" "$BOTLOG"
   tail -n 40 "$LOG"
   exit 1
 fi
 
-echo "Wine setup complete" | tee -a "$LOG"
+echo "Wine setup complete" | tee -a "$LOG" "$BOTLOG"
 exit 0
